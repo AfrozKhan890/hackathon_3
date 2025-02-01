@@ -1,21 +1,19 @@
 import HeroSection from "@/components/HeroSection";
 import HeroTwo from "@/components/Herotwo";
+import InspirationSection from "@/components/Insipration";
 import ShortSec from "@/components/ShortSec";
-import NewArrivals from "@/components/NewArrivals";
-import BlogSection from "@/components/BlogSection"
-import Instasec from "@/components/Instasec"
-export default function Home() {
+import Social from "@/components/Social";
+
+
+export default function Page(){
   return (
-    <div>
+    <>
       <HeroSection />
       <HeroTwo />
-      <ShortSec
-        title="Top Picks For You"
-        description="find a bright ideal to suit your taste with our great selection of suspension, floor and table lights"
-      />
-      <NewArrivals/>
-      <BlogSection/>
-      <Instasec/>
-    </div>
+      <ShortSec />
+      <InspirationSection />
+      <Social />
+    </>
   );
-}
+};
+
