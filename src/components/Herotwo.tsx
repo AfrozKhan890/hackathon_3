@@ -1,35 +1,33 @@
 import Image from "next/image";
-
-export default function HeroTwo(){
-  const categories = ["Dining", "Living", "Bedroom"];
-
+import Link from "next/link";
+export default function HeroTwo() {
   return (
-    <section className="py-10">
-      <h1 className="text-[#333333] text-2xl sm:text-3xl font-bold text-center mt-10">
-        Browse The Range
-      </h1>
-      <p className="text-center text-[#555555] mt-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </p>
-      <div className="flex flex-wrap items-center justify-center mt-16 gap-8">
-        {categories.map((category, index) => (
-          <div key={index} className="flex flex-col items-center max-w-[300px] sm:max-w-full">
-            <Image
-              src={`/images/img${index + 1}.png`}
-              alt={`Explore our ${category} collection`}
-              width={381}
-              height={480}
-              className="w-full h-auto hover:scale-105 transition-transform duration-300"
-              quality={75}
-              loading="lazy"
-            />
-            <h2 className="text-center text-xl sm:text-2xl font-medium mt-6 text-[#333333]">
-              {category}
-            </h2>
+    <section className="bg-lightreddish text-black flex justify-center items-center mx-auto px-4 sm:px-6 md:px-16 lg:px-32">
+      <div className="flex flex-col md:flex-row justify-around w-full items-center">
+        <div className="h-auto py-5 ">
+          <Image
+            src={"/squaretable.png"}
+            alt="Hero 1"
+            width={500}
+            height={400}
+          />
+          <h2 className="text-2xl md:text-4xl">Marble Top Side Table</h2>
+          <div className="pt-4">
+            <Link href={"/shop/df249dc5-0179-4a94-a5f1-1f84df156359"}>
+              <span className="border-b-2 border-black">View Detail</span>
+            </Link>
           </div>
-        ))}
+        </div>
+        <div className="h-[505px] ">
+          <Image src={"/cloudsofa.png"} alt="Hero 2" width={500} height={400} />
+          <h2 className="text-2xl md:text-4xl">CozeLuxe ArmChair</h2>
+          <div className="pt-4">
+            <Link href={"/shop/be8aa138-14fd-4c23-a291-11cec0daa115"}>
+              <span className="border-b-2 border-black">View Detail</span>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
-};
-
+}
