@@ -8,24 +8,12 @@ import { useCart } from "@/context/CartContext"; // Import the custom hook
 
 export default function Cart() {
   const { items, updateQty, removeFromCart } = useCart(); // Use items, updateQty, and removeFromCart from context
-  console.log(items);
-
+  console.log(items)
   // Calculate Subtotal and Total
   const subtotal = items.reduce(
-    (total, item) => total + (item.price * item.quantity || 0), // Ensure price * quantity is not null
+    (total, item) => total + item.price * item.quantity,
     0
   );
-
-  const handleQuantityChange = (id: string, value: number) => {
-    // Ensure quantity is a valid number and greater than 0
-    if (value <= 0) {
-      // Remove the item if quantity is 0 or less
-      removeFromCart(id);
-    } else {
-      // Update the quantity
-      updateQty(id, value);
-    }
-  };
 
   return (
     <div>
@@ -77,10 +65,7 @@ export default function Cart() {
                             type="number"
                             value={item.quantity}
                             onChange={(e) =>
-                              handleQuantityChange(
-                                item.id,
-                                parseInt(e.target.value) || 1
-                              ) // Default to 1 if invalid value
+                              updateQty(item.id, parseInt(e.target.value))
                             }
                             className="w-16 border border-gray-300 rounded p-1 text-center"
                           />
@@ -140,10 +125,7 @@ export default function Cart() {
                             type="number"
                             value={item.quantity}
                             onChange={(e) =>
-                              handleQuantityChange(
-                                item.id,
-                                parseInt(e.target.value) || 1
-                              )
+                              updateQty(item.id, parseInt(e.target.value))
                             }
                             className="w-16 border border-gray-300 rounded p-1 text-center"
                           />
