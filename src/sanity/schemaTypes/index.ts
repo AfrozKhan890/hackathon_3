@@ -5,8 +5,8 @@ import {product} from './product'
 // import {shipment} from './shipment'
 import { customer } from './customer'
 import { order } from './order'
-import payment from './payment'
+// import payment from './payment'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [product,customer,order,payment],
+  types: [product,customer,order],
 }
