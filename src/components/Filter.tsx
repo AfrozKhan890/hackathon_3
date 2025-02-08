@@ -1,8 +1,7 @@
 import { CardData } from "@/utils/types";
-import React, { useState } from "react"; // Importing React
+import React, { useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import { BsGridFill } from "react-icons/bs";
-import { BsViewList } from "react-icons/bs";
+import { BsGridFill, BsViewList } from "react-icons/bs";
 
 interface FilterProps {
   onCategoryChange: (category: string) => void;
@@ -27,9 +26,7 @@ export default function Filter({
     onCategoryChange(category);
   };
 
-  const handleItemsPerPageChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const items = parseInt(e.target.value);
     setItemsPerPage(items);
     onItemsPerPageChange(items);
@@ -73,7 +70,7 @@ export default function Filter({
               value={itemsPerPage}
               onChange={handleItemsPerPageChange}
             >
-              {[8, 16, 32].map((num) => (
+              {[4, 8, 12, 16].map((num) => (
                 <option key={num} value={num}>
                   {num}
                 </option>
@@ -92,6 +89,10 @@ export default function Filter({
               <option value="default">Default</option>
               <option value="price-low-to-high">Price: Low to High</option>
               <option value="price-high-to-low">Price: High to Low</option>
+              <option value="a-to-z">A to Z</option>
+              <option value="z-to-a">Z to A</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
             </select>
           </div>
 

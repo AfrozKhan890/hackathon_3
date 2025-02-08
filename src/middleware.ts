@@ -1,36 +1,30 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default clerkMiddleware(async (auth, req) => {
-  const url = new URL(req.url);
+const isPublicRoute = createRouteMatcher([
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/",
+  "/blog",
+  "/contact",
+  "/shop",
+  "/shop/(.*)",
+  "/checkout/(.*)",
+  "/cart",
+  "/api/(.*)",
+]);
 
-  // Allow public routes (including sign-in and API routes)
-  const publicPaths = ['/sign-in', '/unauthorized', '/api', '/_next'];
-  if (publicPaths.some((path) => url.pathname.startsWith(path))) {
-    return NextResponse.next();
+export default clerkMiddleware(async (auth, request) => {
+  const url = new URL(request.url);
+
+  // Check if the route is public
+  if (!isPublicRoute(request)) {
+    await auth.protect();
   }
-
-  // Check authentication
-  const session = await auth();
-  
-  // If user is NOT logged in, allow access to sign-in but restrict other pages
-  if (!session) {
-    return NextResponse.redirect(new URL('/sign-in', req.url));
-  }
-
-  // Extract user role from session claims
-  const role = session?.sessionClaims?.metadata?.role;
-
-  // If user is logged in but has NO role, treat as unauthorized
-  if (!role) {
-    return NextResponse.redirect(new URL('/unauthorized', req.url));
-  }
-
-  // If user is NOT admin or superadmin, redirect to unauthorized
-  if (role !== "admin" && role !== "superadmin") {
-    return NextResponse.redirect(new URL('/unauthorized', req.url));
-  }
-
-  // If user is an admin or superadmin, allow access
-  return NextResponse.next();
 });
+
+export const config = {
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+  ],
+};  

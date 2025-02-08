@@ -1,11 +1,11 @@
 import BlogCard from "@/components/BlogCard";
 import Link from "next/link";
 
-interface BlogSecDAta {
+interface BlogSecData {
   image: string;
 }
 
-const data: BlogSecDAta[] = [
+const data: BlogSecData[] = [
   {
     image: "/blogsec/Rectangle1.png",
   },
@@ -26,7 +26,7 @@ export default function BlogSection() {
           Find a bright ideal to suit your taste with our great selection{" "}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.map((cardData: BlogSecDAta, index) => (
+          {data.map((cardData: BlogSecData, index) => (
             <BlogCard key={index} image={cardData.image} />
           ))}
         </div>

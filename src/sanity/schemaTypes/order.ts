@@ -1,57 +1,49 @@
-import { defineField, defineType } from "sanity";
+import { defineType, defineField } from "sanity";
 
 export const order = defineType({
   name: "order",
-  type: "document",
   title: "Order",
+  type: "document",
   fields: [
-    // Reference to customer
     defineField({
       name: "customer",
-      type: "reference",
       title: "Customer",
-      to: [{ type: "customer" }], // Reference the customer schema
+      type: "reference",
+      to: [{ type: "customer" }],
       validation: (Rule) => Rule.required(),
     }),
-
-    // Array of products with quantity
     defineField({
       name: "products",
-      type: "array",
       title: "Products",
+      type: "array",
       of: [
-        defineField({
-          name: "productItem",
+        {
           type: "object",
           fields: [
             defineField({
               name: "product",
-              type: "reference",
               title: "Product",
-              to: [{ type: "product" }], // Reference the product schema
+              type: "reference",
+              to: [{ type: "product" }],
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "quantity",
-              type: "number",
               title: "Quantity",
+              type: "number",
               validation: (Rule) =>
                 Rule.required().min(1).error("Quantity must be at least 1"),
             }),
           ],
-        }),
+        },
       ],
       validation: (Rule) =>
-        Rule.required()
-          .min(1)
-          .error("Order must include at least one product."),
+        Rule.required().min(1).error("Order must have at least one product."),
     }),
-
-    // Order status
     defineField({
       name: "orderStatus",
-      type: "string",
       title: "Order Status",
+      type: "string",
       options: {
         list: [
           { title: "Pending", value: "pending" },
@@ -60,48 +52,32 @@ export const order = defineType({
           { title: "Completed", value: "completed" },
           { title: "Cancelled", value: "cancelled" },
         ],
-        layout: "dropdown",
       },
-      initialValue: "pending", // Default value
+      initialValue: "pending",
     }),
-
-    // Payment method
     defineField({
       name: "paymentMethod",
-      type: "string",
       title: "Payment Method",
+      type: "string",
       options: {
         list: [
-          { title: "Cash on Delivery (COD)", value: "cod" },
+          { title: "Cash on Delivery", value: "cod" },
           { title: "Online", value: "online" },
         ],
-        layout: "radio",
       },
       validation: (Rule) => Rule.required(),
-    }),
-
-    // Delivery address (referenced from customer)
-    defineField({
-      name: "deliveryAddress",
-      type: "string",
-      title: "Delivery Address",
-      description: "This will be taken from the customer's address.",
-      validation: (Rule) => Rule.required(),
-    }),
-
-    // Order date
-    defineField({
-      name: "orderDate",
-      type: "datetime",
-      title: "Order Date",
-      validation: (Rule) => Rule.required(),
-      initialValue: () => new Date().toISOString(), // Automatically set current date
     }),
     defineField({
       name: "totalAmount",
-      type: "number",
       title: "Total Amount",
+      type: "number",
       validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: "orderDate",
+      title: "Order Date",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
     }),
   ],
 });

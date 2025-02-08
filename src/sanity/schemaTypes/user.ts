@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
-export const customer = defineType({
-  name: "customer",
-  title: "Customer",
+export const user = defineType({
+  name: "user",
+  title: "User",
   type: "document",
   fields: [
     defineField({
@@ -18,16 +18,16 @@ export const customer = defineType({
       validation: (Rule) => Rule.required().email(),
     }),
     defineField({
-      name: "phoneNumber",
-      title: "Phone Number",
+      name: "role",
+      title: "Role",
       type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "address",
-      title: "Address",
-      type: "string",
-      validation: (Rule) => Rule.required(),
+      options: {
+        list: [
+          { title: "Admin", value: "admin" },
+          { title: "Customer", value: "customer" },
+        ],
+      },
+      initialValue: "customer",
     }),
   ],
 });
